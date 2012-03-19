@@ -1,0 +1,27 @@
+#define NEAR 50
+#define POWER 40
+
+task main()
+{
+ int dist = 0;
+ bool dir=false;
+ SetSensorUltrasonic(IN_1);
+
+ while(true) {
+   if (dir == true) {
+      OnFwd(OUT_B,POWER);
+      OnRev(OUT_C,POWER);
+   }
+   else {
+      OnFwd(OUT_C,POWER);
+      OnRev(OUT_B,POWER);
+   }
+   while(SensorUS(IN_1) > NEAR);
+   OnFwd(OUT_BC,POWER);
+   while(SensorUS(IN_1) < NEAR);
+   if (dir == true)
+      dir = false;
+   else
+      dir = true;
+ }
+}
